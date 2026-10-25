@@ -39,33 +39,27 @@ class CaloriesCalculator(Calculator):
 
 
 class CashCalculator(Calculator):
-    USD_RATE = float(60)  # Курс доллар США.
-    EURO_RATE = float(70)  # Курс Евро.
-
-    def get_today_cash_remained(self, currency,
-                                USD_RATE=USD_RATE, EURO_RATE=EURO_RATE):
+    USD_RATE = 60.0  # Курс доллар США.
+    EURO_RATE = 70.0  # Курс Евро.
+    RUB_RATE = 1.0
+    def get_today_cash_remained(self, currency):
         cash_remained = self.limit - self.get_today_stats()
 
-        d = {'usd': (USD_RATE, 'USD'), 'eur': (EURO_RATE, 'Euro'), 'rub': (1.0, 'руб')}
+        rates = {'usd': (USD_RATE, 'USD'), 'eur': (EURO_RATE, 'Euro'), 'rub': (RUB_RATE, 'руб')}
 
-        rate = d.get(currency)
-        if rate is None:
+        if currency not in rates:
             return f'Неизвестная валюта {currency}'
 
-        cash_remained /= rate[0]
-        currency_type = d.get(currency)[1]
+        rate, currency_name = rates[currency]
+        cash_remained /= rate
+        rounded_cash = round(cash_remained, 2)
 
         if cash_remained > 0:
-            return (
-                f'На сегодня осталось {round(cash_remained, 2)} '
-                f'{currency_type}'
-            )
-        elif cash_remained == 0:
+            return (f'На сегодня осталось {rounded_cash} {currency_name}')
+        if cash_remained == 0:
             return 'Денег нет, держись'
         elif cash_remained < 0:
-            return 'Денег нет, держись:' \
-                   ' твой долг - {0:.2f} {1}'.format(-cash_remained,
-                                                     currency_type)
+            return 'Денег нет, держись: твой долг - {-cash_remained:.2f} {currency_type}
 
     def get_week_stats(self):
         super().get_week_stats()
