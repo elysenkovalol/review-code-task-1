@@ -2,15 +2,14 @@ import datetime as dt
 
 
 class Record:
-    def __init__(self, amount, comment, date=''):
+    def __init__(self, amount, comment, date='None'):
         self.amount = amount
-        self.date = (
-            dt.datetime.now().date() if
-            not
-            date else dt.datetime.strptime(date, '%d.%m.%Y').date())
         self.comment = comment
-
-
+        if date is None:
+            self.date = dt.datetime.now().date()
+        else:
+            self.date = dt.datetime.strptime(date, '%d.%m.%Y').date()
+        
 class Calculator:
     def __init__(self, limit):
         self.limit = limit
