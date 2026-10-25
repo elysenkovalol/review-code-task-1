@@ -20,7 +20,7 @@ class Calculator:
         self.records.append(record)
 
     def get_today_stats(self):
-        return sum([rec.amount for rec in self.records if rec.date == dt.datetime.now().date()])
+        return sum(rec.amount for rec in self.records if rec.date == dt.datetime.now().date())
 
     def get_week_stats(self):
         today = dt.datetime.now().date()
