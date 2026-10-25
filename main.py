@@ -67,4 +67,4 @@ class CashCalculator(Calculator):
                                                      currency_type)
 
     def get_week_stats(self):
-        super().get_week_stats()
+        return super().get_week_stats()
