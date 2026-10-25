@@ -33,7 +33,6 @@ class CaloriesCalculator(Calculator):
         if x > 0:
             return f'Сегодня можно съесть что-нибудь' \
                    f' ещё, но с общей калорийностью не более {x} кКал'
-        else:
             return ('Хватит есть!')
 
 
